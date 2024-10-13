@@ -1,0 +1,59 @@
+<div class="filters">
+
+  <div class="total-card">
+    <div class="header-card">
+      <span>Total de ventas de hoy</span>
+      <span class="right-icon">
+        <i class="fa fa-info-circle"></i>
+      </span>
+    </div>
+    <div class="content-card">
+      <span>$ 394.561.894</span>
+    </div>
+    <div class="footer-card">
+      <span>Junio, 2024</span>
+    </div>
+  </div>
+
+  <div class="date-filters">
+    <div class="button-section">
+      <button class="selected">Hoy</button>
+      <button>Esta semana</button>
+      <button>Junio</button>
+    </div>
+    <div class="filter-button-section">
+      <button><span>Filtrar</span> <i class="fa fa-sliders"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- <table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Estado</th>
+      <th>Método de Pago</th>
+      <th>Tipo de Venta</th>
+      <th>Fecha de Creación</th>
+      <th>Referencia</th>
+      <th>Monto</th>
+      <th>Deducción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let transaction of transactions">
+      <td>{{ transaction.id }}</td>
+      <td>{{ transaction.status }}</td>
+      <td>{{ transaction.paymentMethod }}</td>
+      <td>{{ transaction.salesType }}</td>
+      <td>{{ transaction.createdAt | date }}</td>
+      <td>{{ transaction.transactionReference }}</td>
+      <td>{{ transaction.amount | currency }}</td>
+      <td>{{ transaction.deduction | currency }}</td>
+    </tr>
+  </tbody>
+</table> -->
+
+
+<div *ngIf="isLoading">Cargando transacciones...</div>
+<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>

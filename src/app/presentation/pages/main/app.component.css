@@ -1,0 +1,6 @@
+.container {
+  height: calc(100vh - 125px);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 60px;
+}
