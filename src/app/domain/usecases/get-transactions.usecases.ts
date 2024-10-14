@@ -1,13 +1,9 @@
-// src/app/core/usecases/get-transactions.usecase.ts
-
 import { Observable } from 'rxjs';
-import {
-  TransactionResponseList
-} from '../../domain/entities/transaction';
+import { Transaction } from '../../domain/entities/transaction';
 import { TransactionRepository } from '../../domain/repositories/transaction.repository';
 
-export const getTransactionsUsecase = (
+export const getTransactionsUseCase = (
   transactionRepository: TransactionRepository
-): Observable<TransactionResponseList> => {
+): Observable<Transaction[]> => {
   return transactionRepository.getTransactions();
 };

@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
-import { TransactionResponseList } from '../entities/transaction';
+import { Transaction } from '../entities/transaction';
 
-export interface TransactionRepository {
-  getTransactions(): Observable<TransactionResponseList>;
+export type TransactionRepository = {
+  getTransactions(): Observable<Transaction[]>;
 }

@@ -1,0 +1,59 @@
+<div class="transaction-table-card">
+  <div class="transaction-header-card">
+    <span>Tus ventas de Junio</span>
+  </div>
+  <div class="transaction-content-card">
+
+    <div class="search-bar">
+      <i class="fa fa-search"></i>
+      <input type="text" placeholder="Buscar">
+    </div>
+
+    <div class="transaction-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Transacción</th>
+            <th>Fecha y hora</th>
+            <th>Metodo de pago</th>
+            <th>ID transacción Bold</th>
+            <th>Monto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let transaction of filteredTransactions">
+            <td>
+              <div>
+                <i *ngIf="transaction.type === 'TERMINAL'" class="fa fa-link"></i>
+                <i *ngIf="transaction.type === 'PAYMENT_LINK'" class="fa fa-credit-card"></i>
+                <span class="transaction-status-text">
+                  {{ transaction.status === 'SUCCESSFUL' ? 'Cobro exitoso' : 'Cobro no realizado' }}
+                </span>
+              </div>
+            </td>
+            <td>{{ formatDate(transaction.createdAt) }}</td>
+            <td>
+              <div class="payment-method">
+                <img [src]="getImageName(transaction.paymentMethod, transaction.franchise)"
+                  alt="{{transaction.paymentMethod}}" width="20" />
+                <span *ngIf="transaction.paymentMethod === 'PSE'" class="payment-label">PSE</span>
+                <span *ngIf="transaction.paymentMethod !== 'PSE'" class="payment-label">**** {{ transaction.reference
+                  }}</span>
+              </div>
+            </td>
+            <td>{{ transaction.id }}</td>
+            <td>
+              <div>
+                <span class="transaction-amount">{{ transaction.amount | currency:'':'symbol':'1.0-0' }}</span>
+                <div *ngIf="transaction.deduction">
+                  <span class="deduction-label">Deducción Bold</span>
+                  <span class="deduction-amount">- {{ transaction.deduction | currency:'':'symbol':'1.0-0' }}</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

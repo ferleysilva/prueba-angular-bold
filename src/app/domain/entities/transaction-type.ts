@@ -1,2 +1,2 @@
 export type TransactionType
- = 'TERMINAL' | 'ONLINE';
+ = 'TERMINAL' | 'PAYMENT_LINK';

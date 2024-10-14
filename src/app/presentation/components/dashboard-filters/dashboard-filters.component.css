@@ -1,0 +1,127 @@
+.filters {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+.total-card {
+    flex: 2;
+    border-radius: 10px;
+    justify-content: space-between;
+    background: #FFFFFF;
+}
+
+.total-card .header-card {
+    padding: 15px 20px;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    background: linear-gradient(50deg, #121e6c 0%, #ee424e 100%);
+}
+
+.total-card .header-card span {
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.total-card .header-card .right-icon {
+    color: #FFFFFF;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.total-card .header-card .right-icon i {
+    font-style: italic;
+    font-size: 16px;
+}
+
+.total-card .content-card {
+    text-align: center;
+    padding: 10px;
+}
+
+.total-card .content-card span {
+    background: linear-gradient(50deg, #121e6c 0%, #ee424e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.total-card .footer-card {
+    text-align: center;
+    font-size: 12px;
+    padding-bottom: 10px;
+}
+
+.date-filters {
+    flex: 4;
+    flex-direction: column;
+    display: flex;
+    gap: 10px;
+    height: 80px;
+}
+
+.date-filters .button-section {
+    flex: 1;
+    display: flex;
+    gap: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: #FFFFFF;
+    height: 40px;
+}
+
+.date-filters .button-section button {
+    background: #FFFFFF;
+    flex: 1;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    color: #121E6C;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 10px 20px;
+}
+
+.date-filters .button-section button:hover {
+    background: #F3F3F3;
+    border-radius: 15px;
+}
+
+.date-filters .button-section button.selected {
+    background: #F3F3F3;
+    border-radius: 15px;
+    color: #121E6C;
+}
+
+.date-filters .filter-button-section {
+    flex: 1;
+    display: flex;
+    justify-content: right;
+    height: 40px;
+}
+
+.date-filters .filter-button-section button {
+    background: #FFFFFF;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #121e6c;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.date-filters .filter-button-section button span {
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    transition: color 0.3s;
+    margin-right: 5px;
+}
