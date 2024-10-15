@@ -21,6 +21,4 @@ export const transactionInputModelMapper = (inputModel: TransactionListInputMode
 
       
     return transactions
-    
-
 }

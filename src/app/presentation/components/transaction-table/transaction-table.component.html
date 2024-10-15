@@ -6,7 +6,7 @@
 
     <div class="search-bar">
       <i class="fa fa-search"></i>
-      <input type="text" placeholder="Buscar">
+      <input type="text" placeholder="Buscar" (input)="onSearchTransactions($event)" [value]="transactionFilters.search">
     </div>
 
     <div class="transaction-table">

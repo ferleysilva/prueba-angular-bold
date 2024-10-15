@@ -3,6 +3,7 @@ import { Transaction } from '../../../domain/entities/transaction';
 import { BoldTransactionRepository } from '../../../data/repositories/bold-transaction.repository';
 import { getTransactionsUseCase } from '../../../domain/usecases/get-transactions.usecases';
 import moment from 'moment';
+import { getDataFromLocalStorage } from '../../../common/services/localstorage.services';
 
 @Component({
   selector: 'app-dashboard-component',
@@ -12,15 +13,19 @@ import moment from 'moment';
 export class DashboardComponent implements OnInit {
   transactions: Transaction[] = [];
   filteredTransactions: Transaction[] = [];
-  selectedStatus: string = '';
-  startDate: string | null = null;
-  endDate: string | null = null;
   isLoading: boolean = false;
-  selectedFilter: string = 'today';
+  transactionFilters: any = {
+    date: 'today',
+    paymentMethod: [],
+    search: '',
+  };
 
   constructor(private transactionRepository: BoldTransactionRepository) {}
 
   ngOnInit() {
+    this.transactionFilters = {
+      ...getDataFromLocalStorage('transationFilters')
+    }
     this.getTransactionList();
   }
 
@@ -29,12 +34,8 @@ export class DashboardComponent implements OnInit {
 
     getTransactionsUseCase(this.transactionRepository).subscribe({
       next: (response: Transaction[]) => {
-        const selectedFilterDay = localStorage.getItem('selectedFilterDay');
         this.transactions = response;
-        this.filterTransactions({
-          type: 'date',
-          value: selectedFilterDay || 'today',
-        });
+        this.filterTransactions(this.transactionFilters);
       },
       error: (error) => {
         console.error('Error fetching transactions:', error);
@@ -45,18 +46,21 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  filterTransactions(filter: any) {
-    switch (filter.type) {
-      case 'date':
-        this.filterTransactionsByDate(filter.value as string);
-        break;
-      case 'paymentMethod':
-        this.filterTransactionsByPaymentMethod(filter.value as string[]);
-        break;
-      case 'search':
-        break;
+  filterTransactions(filters: any) {
+    console.log(filters);
 
-      default:
+    this.filteredTransactions = this.transactions;
+
+    if (filters.date) {
+      this.filterTransactionsByDate(filters.date);
+    }
+
+    if (filters.paymentMethod && filters.paymentMethod.length > 0) {
+      this.filterTransactionsByPaymentMethod(filters.paymentMethod);
+    }
+
+    if (filters.search && filters.search !== '') {
+      this.filterTransactionsBySearch(filters.search);
     }
   }
 
@@ -65,37 +69,48 @@ export class DashboardComponent implements OnInit {
 
     switch (filter) {
       case 'today':
-        this.filteredTransactions = this.transactions.filter((transaction) =>
-          moment(transaction.createdAt).isSame(now, 'day')
+        this.filteredTransactions = this.filteredTransactions.filter(
+          (transaction) => moment(transaction.createdAt).isSame(now, 'day')
         );
         break;
 
       case 'week':
-        this.filteredTransactions = this.transactions.filter((transaction) =>
-          moment(transaction.createdAt).isSame(now, 'week')
+        this.filteredTransactions = this.filteredTransactions.filter(
+          (transaction) => moment(transaction.createdAt).isSame(now, 'week')
         );
         break;
 
       case 'june':
-        this.filteredTransactions = this.transactions.filter(
+        this.filteredTransactions = this.filteredTransactions.filter(
           (transaction) => moment(transaction.createdAt).month() === 5
         );
         break;
-
-      default:
-        this.filteredTransactions = this.transactions;
     }
 
-    this.selectedFilter = filter;
+    this.transactionFilters.date = filter;
   }
 
   filterTransactionsByPaymentMethod(transactionTypes: string[]) {
     if (transactionTypes.includes('ALL')) {
-      this.filteredTransactions = this.transactions;
+      this.filteredTransactions = this.filteredTransactions;
     } else {
-      this.filteredTransactions = this.transactions.filter((transaction) =>
-        transactionTypes.includes(transaction.type)
+      this.filteredTransactions = this.filteredTransactions.filter(
+        (transaction) => transactionTypes.includes(transaction.type)
       );
     }
+  }
+
+  filterTransactionsBySearch(searchText: string) {
+    const lowerCaseSearchTerm = searchText.toLowerCase();
+    this.filteredTransactions = this.filteredTransactions.filter(
+      (transaction) => {
+        console.log(transaction)
+        return String(transaction.reference).toLowerCase().includes(lowerCaseSearchTerm) ||
+          String(transaction.type).toLowerCase().includes(lowerCaseSearchTerm) ||
+          String(transaction.paymentMethod).toLowerCase().includes(lowerCaseSearchTerm) ||
+          String(transaction.amount).toLowerCase().includes(lowerCaseSearchTerm) ||
+          String(transaction.status).toLowerCase().includes(lowerCaseSearchTerm);
+      }
+    );
   }
 }

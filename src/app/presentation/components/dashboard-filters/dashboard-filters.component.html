@@ -18,25 +18,25 @@
   <div class="date-filters">
 
     <div class="button-section">
-      <button [class.selected]="selectedFilter === 'today'" (click)="onFilterClick('today')">Hoy</button>
-      <button [class.selected]="selectedFilter === 'week'" (click)="onFilterClick('week')">Esta semana</button>
-      <button [class.selected]="selectedFilter === 'june'" (click)="onFilterClick('june')">Junio</button>
+      <button [class.selected]="transactionFilters.date === 'today'" (click)="onDateClickAction('today')">Hoy</button>
+      <button [class.selected]="transactionFilters.date === 'week'" (click)="onDateClickAction('week')">Esta semana</button>
+      <button [class.selected]="transactionFilters.date === 'june'" (click)="onDateClickAction('june')">Junio</button>
     </div>
 
     <div class="filter-button-section">
-      <button class="checkbox-button-filters" (click)="showOrHideCheckboxFilters()"
-        [ngClass]="showCheckboxFilters ? 'large' : 'auto'">
+      <button class="checkbox-button-filters" (click)="onShowOrHideCheckboxFiltersAction()"
+        [ngClass]="showCheckboxTransactionTypeFlter ? 'large' : 'auto'">
         <span class="filter-text-container">
           <span class="filter-text">Filtrar</span>
         </span>
         <span class="icon-container">
-          <i class="fa fa-sliders" *ngIf="!showCheckboxFilters"></i>
-          <i class="fa fa-times" *ngIf="showCheckboxFilters"></i>
+          <i class="fa fa-sliders" *ngIf="!showCheckboxTransactionTypeFlter"></i>
+          <i class="fa fa-times" *ngIf="showCheckboxTransactionTypeFlter"></i>
         </span>
       </button>
-      <div class="options" [ngClass]="{ 'show': showCheckboxFilters }">
+      <div class="options" [ngClass]="{ 'show': showCheckboxTransactionTypeFlter }">
         <label *ngFor="let option of filterTransactionTypeOptions">
-          <input type="checkbox" [checked]="option.checked" (change)="onFilterChange(option)" />
+          <input type="checkbox" [checked]="option.checked" (change)="onChangeTransactionTypeFilterAction(option)" />
           {{ option.label === 'TERMINAL' ? 'Cobro con datáfono' : option.label === 'PAYMENT_LINK' ? 'Cobro con link de
           pago' : 'Ver todos' }}
         </label>

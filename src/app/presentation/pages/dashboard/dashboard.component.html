@@ -3,8 +3,10 @@
 </div>
 
 <div *ngIf="!isLoading" class="dashboard-container">
-  <app-dashboard-filters-component [filteredTransactions]="filteredTransactions" [selectedFilter]="selectedFilter"
+  <app-dashboard-filters-component [filteredTransactions]="filteredTransactions"
+    [transactionFilters]="transactionFilters"
     (filterTransactions)="filterTransactions($event)"></app-dashboard-filters-component>
-  <app-transaction-table [filteredTransactions]="filteredTransactions">
+  <app-transaction-table [filteredTransactions]="filteredTransactions" [transactionFilters]="transactionFilters"
+    (filterTransactions)="filterTransactions($event)">
   </app-transaction-table>
 </div>

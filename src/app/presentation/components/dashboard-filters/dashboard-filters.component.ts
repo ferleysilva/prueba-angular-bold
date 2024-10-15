@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import moment from 'moment';
 import { Transaction } from '../../../domain/entities/transaction';
+import { saveDataInLocalStorage } from '../../../common/services/localstorage.services';
 
 @Component({
   selector: 'app-dashboard-filters-component',
@@ -8,14 +9,15 @@ import { Transaction } from '../../../domain/entities/transaction';
   styleUrls: ['./dashboard-filters.component.scss'],
 })
 export class DashboardFiltersComponent implements OnInit {
-  @Input() selectedFilter: string = '';
+  @Input() transactionFilters: any = {};
   @Input() filteredTransactions: Transaction[] = [];
   @Output() filterTransactions = new EventEmitter<{
-    type: string;
-    value: string | string[];
+    date: string;
+    paymentMethod: string | string[];
+    search: string;
   }>();
 
-  showCheckboxFilters = false;
+  showCheckboxTransactionTypeFlter = false;
   filterTransactionTypeOptions = [
     { label: 'TERMINAL', checked: false },
     { label: 'PAYMENT_LINK', checked: false },
@@ -24,17 +26,22 @@ export class DashboardFiltersComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-    this.loadFiltersFromLocalStorage();
-  }
+  ngOnInit(): void {}
 
-  onFilterClick(day: string) {
-    localStorage.setItem('selectedFilterDay', day);
-    this.filterTransactions.emit({ type: 'date', value: day });
+  onDateClickAction(day: string) {
+    this.filterTransactions.emit({
+      ...this.transactionFilters,
+      date: day,
+    });
+
+    saveDataInLocalStorage('transationFilters', {
+      ...this.transactionFilters,
+      date: day,
+    });
   }
 
   getFilteredDateInString(): string {
-    switch (this.selectedFilter) {
+    switch (this.transactionFilters.date) {
       case 'today':
         return moment().format('DD [de] MMMM YYYY');
       case 'week':
@@ -59,13 +66,20 @@ export class DashboardFiltersComponent implements OnInit {
     }, 0);
   }
 
-  showOrHideCheckboxFilters() {
-    this.showCheckboxFilters = !this.showCheckboxFilters;
+  onShowOrHideCheckboxFiltersAction() {
+    this.showCheckboxTransactionTypeFlter =
+      !this.showCheckboxTransactionTypeFlter;
   }
 
-  onFilterChange(option: { label: string; checked: boolean }) {
-    console.log(option);
+  onChangeTransactionTypeFilterAction(option: {
+    label: string;
+    checked: boolean;
+  }) {
     option.checked = !option.checked;
+
+    if (!this.filterTransactionTypeOptions.some((option) => option.checked)) {
+      this.applyFilters();
+    }
   }
 
   applyFilters() {
@@ -73,30 +87,22 @@ export class DashboardFiltersComponent implements OnInit {
       .filter((option) => option.checked)
       .map((option) => option.label);
 
-    this.saveFiltersToLocalStorage();
+    this.transactionFilters.paymentMethod = selectedFilters;
 
     this.filterTransactions.emit({
-      type: 'paymentMethod',
-      value: selectedFilters,
+      ...this.transactionFilters,
+      paymentMethod: selectedFilters,
     });
+
+    saveDataInLocalStorage('transationFilters', {
+      ...this.transactionFilters,
+      paymentMethod: selectedFilters,
+    });
+
+    this.showCheckboxTransactionTypeFlter = false;
   }
 
   isApplyButtonDisabled(): boolean {
     return !this.filterTransactionTypeOptions.some((option) => option.checked);
-  }
-
-  saveFiltersToLocalStorage() {
-    const filtersToSave = this.filterTransactionTypeOptions.map((option) => ({
-      label: option.label,
-      checked: option.checked,
-    }));
-    localStorage.setItem('selectedFilters', JSON.stringify(filtersToSave));
-  }
-
-  loadFiltersFromLocalStorage() {
-    const savedFilters = localStorage.getItem('selectedFilters');
-    if (savedFilters) {
-      this.filterTransactionTypeOptions = JSON.parse(savedFilters);
-    }
   }
 }
