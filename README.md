@@ -1,27 +1,46 @@
-# PruebaBold
+# Prueba tecnica Bold
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.8.
+## Razonamiento
 
-## Development server
+La estructura del proyecto esta basada en los principios de Clean Architecture, segmentada en diversas capas que facilitan el mantenimiento y la escalabilidad. Varias de estas capas están orientadas hacia un paradigma funcional, lo que ofrece ventajas como la facilidad el entendimiento sobre el código, una mejor testabilidad y una mayor reutilización de componentes. Por ejemplo, si en el futuro decidimos migrar a un framework diferente, como React, la capa de dominio y otras componentes pueden ser reutilizadas sin complicaciones, lo que simplifica el proceso de adaptación.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Además, el proyecto cuenta con un proceso de CI/CD, utilizando GitHub Actions para integrarse con Firebase. Esto permite que la aplicación se despliegue automáticamente en el entorno de producción cada vez que se suben cambios a la rama principal, garantizando una entrega continua y eficiente.
 
-## Code scaffolding
+En cuanto a los estilos, se ha optado por utilizar CSS puro para este proyecto. Esta decisión se tomó considerando que, dado el tamaño del proyecto, no se justificaba el uso de preprocesadores. El uso de CSS puro facilita la comprensión del código y elimina la necesidad de aprender sintaxis adicional, permitiendo a los desarrolladores concentrarse en la lógica y el diseño sin complejidades innecesarias.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Requisitos
 
-## Build
+### Versiones de Node.js y npm
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Asegúrate de tener instaladas las siguientes versiones:
 
-## Running unit tests
+- **Node.js**: `18.x` o superior
+- **npm**: `10.x` o superior
+- **Angular CLI**: `18.x` o superior
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Puedes verificar las versiones instaladas con los siguientes comandos:
 
-## Running end-to-end tests
+```bash
+node -v
+npm -v
+ng --version
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Ejecutar el proyecto en local
 
-## Further help
+Instalacion dependencias `npm install`
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Correr el proyecto en local `ng serve` `localhost:4200`
+
+### Ejecutar test Karma
+
+Se integraron algunos pruebas unitarias con Karma, para correr los test ejecutar
+
+`ng test` -> Ejecuta todos los test.
+
+`ng test --code-coverage` -> Muestra porcentaje general de cobertura de pruebas que tiene le proyecto.
+
+### URL donde se aloja la aplicación
+
+Esta aplicacion esta en un host de firebase, pueden verlo ingresando a la siguiente url: [https://prueba-bold.web.app/dashboard](https://prueba-bold.web.app/dashboard)
+ 
