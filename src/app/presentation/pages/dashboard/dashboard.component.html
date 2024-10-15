@@ -7,6 +7,11 @@
     [transactionFilters]="transactionFilters"
     (filterTransactions)="filterTransactions($event)"></app-dashboard-filters-component>
   <app-transaction-table [filteredTransactions]="filteredTransactions" [transactionFilters]="transactionFilters"
-    (filterTransactions)="filterTransactions($event)">
+    (filterTransactions)="filterTransactions($event)" (onShowTransactionDetails)="onShowTransactionDetails($event)">
   </app-transaction-table>
+  <app-transaction-panel-detail [showTransactionDetailsPanel]="showTransactionDetailsPanel" [selectedTransaction]="selectedTransaction"
+    (onHideTransactionDetails)="onHideTransactionDetails()">
+  </app-transaction-panel-detail>
+
+  <div class="dark-backdrop" *ngIf="showTransactionDetailsPanel"></div>
 </div>

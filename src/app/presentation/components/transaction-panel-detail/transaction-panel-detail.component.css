@@ -1,0 +1,126 @@
+.info-panel {
+    position: fixed;
+    right: -450px;
+    top: 0;
+    width: 450px;
+    height: 100%;
+    background: #FFFFFF;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: right 0.3s ease;
+    z-index: 9999;
+  }
+  
+  .info-panel.open {
+    right: 0; 
+    border-radius: 15px 0 0 15px;
+  }
+
+  .info-panel-close {
+    text-align: right;
+    padding: 20px;
+  }
+
+  .info-panel-close button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #606060;
+  }
+
+  .info-panel-close button i {
+    font-size: 16px;
+  }
+
+  .transaccion-date {
+    color: #606060;
+    font-size: 10px;
+    opacity: 0.7;
+  }
+  
+  .info-panel-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .info-panel-header img {
+    max-width: 100px;
+    margin-bottom: 10px;
+  }
+
+  .status-text {
+    font-size: 12px;
+    color: #606060;
+    font-weight: 500;
+  }
+  
+  .info-panel-content {
+    padding: 20px;
+    overflow-y: auto;
+  }
+  
+  .info-panel-content div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .info-panel-content hr {
+    margin: 20px 0;
+  }
+
+  .total-amount {
+    margin: 10px auto;
+    display: block;
+    color: #121e6c;
+    font-weight: 500;
+    font-size: 18px;
+  }
+
+  .transaccion-label {
+    font-size: 12px;
+    color: #606060;
+    font-weight: 400;
+    opacity: 0.5;
+  }
+
+  .deduction-amount {
+    font-size: 10px;
+    color: #ee424e;
+    font-weight: 500;
+  }
+
+  .transaccion-id {
+    font-size: 10px;
+    color: #606060;
+    font-weight: 600;
+  }
+
+  .payment-method {
+    display: flex;
+    align-items: center;
+  }
+  
+  .payment-method img {
+    margin-right: 8px;
+  }
+
+  .payment-label {
+    font-size: 10px;
+    color: #606060;
+    font-weight: 400;
+    opacity: 0.5;
+  }
+
+  .transaction-status-text {
+    margin-left: 5px;
+    color: #606060;
+    font-weight: 500;
+    font-size: 10px;
+  }
+
+  .transaccion-type i {
+    font-size: 10px;
+  }

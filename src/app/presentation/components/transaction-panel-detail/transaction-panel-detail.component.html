@@ -1,0 +1,53 @@
+<div class="info-panel" [ngClass]="{ 'open': showTransactionDetailsPanel }">
+  <div class="info-panel-close">
+    <button (click)="onHidePanelAction()"><i class="fa fa-times"></i></button>
+  </div>
+  <div class="info-panel-header">
+    <img src="{{ selectedTransaction.status === 'SUCCESSFUL' ? 'status-success.png' : 'status-failed.png' }}"
+      alt="status" width="30">
+    <span class="status-text">{{ selectedTransaction.status === 'SUCCESSFUL' ? '¡Cobro exitoso!' : '¡Cobro no
+      realizado!' }}</span>
+
+    <span class="total-amount">{{selectedTransaction.amount | currency:'':'symbol':'1.0-0'}}</span>
+    <span class="transaccion-date">{{createdAtFormatDate(selectedTransaction.createdAt)}}</span>
+  </div>
+  <div class="info-panel-content">
+    <div>
+      <span class="transaccion-label">ID transaccion Bold</span>
+      <span class="transaccion-id">SDSADF7ASD6DF3H</span>
+    </div>
+    <div *ngIf="selectedTransaction.deduction">
+      <span class="transaccion-label">Dedduccion Bold</span>
+      <span class="deduction-amount">- {{selectedTransaction.deduction | currency:'':'symbol':'1.0-0'}}</span>
+    </div>
+
+    <hr>
+
+    <div>
+      <span class="transaccion-label">Metodo de pago</span>
+      <span>
+        <div class="payment-method">
+          <img [src]="getImageName(selectedTransaction.paymentMethod, selectedTransaction.franchise)"
+            alt="{{selectedTransaction.paymentMethod}}" width="20" />
+          <span *ngIf="selectedTransaction.paymentMethod === 'PSE'" class="payment-label">PSE</span>
+          <span *ngIf="selectedTransaction.paymentMethod !== 'PSE'" class="payment-label">**** {{
+            selectedTransaction.reference }}</span>
+        </div>
+      </span>
+    </div>
+
+    <div>
+      <span class="transaccion-label">Tipo de pago</span>
+      <span>
+        <div class="transaccion-type">
+          <i *ngIf="selectedTransaction.type === 'PAYMENT_LINK'" class="fa fa-link"></i>
+          <i *ngIf="selectedTransaction.type === 'TERMINAL'" class="fa fa-credit-card"></i>
+          <span class="transaction-status-text">
+            {{ selectedTransaction.type === 'TERMINAL' ? 'Datáfono' : 'Link de pagos' }}
+          </span>
+        </div>
+      </span>
+    </div>
+
+  </div>
+</div>

@@ -1,1 +1,1 @@
-export type TransactionStatus = 'SUCCESSFUL' | 'FAILED';
+export type TransactionStatus = 'SUCCESSFUL' | 'REJECTED';

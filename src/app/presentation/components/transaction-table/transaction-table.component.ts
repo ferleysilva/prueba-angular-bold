@@ -5,6 +5,7 @@ import moment from 'moment';
 import { PaymentMethod } from '../../../domain/entities/payment-method';
 import { Franchise } from '../../../domain/entities/franchise';
 import { saveDataInLocalStorage } from '../../../common/services/localstorage.services';
+import { formatDate } from '../../../common/services/date.utils';
 
 @Component({
   selector: 'app-transaction-table',
@@ -19,13 +20,14 @@ export class TransactionTableComponent implements OnInit {
     paymentMethod: string | string[];
     search: string;
   }>();
+  @Output() onShowTransactionDetails = new EventEmitter<Transaction>();
 
   constructor() {}
 
   ngOnInit() {}
 
-  formatDate(timestamp: number): string {
-    return moment(timestamp).format('DD/MM/YYYY - HH:mm:ss');
+  createdAtFormatDate(timestamp: number): string {
+    return formatDate(timestamp);
   }
 
   getImageName(paymentMethod: PaymentMethod, franchise?: Franchise): string {
@@ -46,6 +48,11 @@ export class TransactionTableComponent implements OnInit {
       default:
         return '';
     }
+  }
+
+  openPanelTransactionDetails(transaction: Transaction) {
+    console.log(transaction);
+    this.onShowTransactionDetails.emit(transaction);
   }
 
   onSearchTransactions(event: Event): void {

@@ -26,12 +26,12 @@
               <div>
                 <i *ngIf="transaction.type === 'PAYMENT_LINK'" class="fa fa-link"></i>
                 <i *ngIf="transaction.type === 'TERMINAL'" class="fa fa-credit-card"></i>
-                <span class="transaction-status-text">
+                <span class="transaction-status-text" (click)="openPanelTransactionDetails(transaction)">
                   {{ transaction.status === 'SUCCESSFUL' ? 'Cobro exitoso' : 'Cobro no realizado' }}
                 </span>
               </div>
             </td>
-            <td>{{ formatDate(transaction.createdAt) }}</td>
+            <td>{{ createdAtFormatDate(transaction.createdAt) }}</td>
             <td>
               <div class="payment-method">
                 <img [src]="getImageName(transaction.paymentMethod, transaction.franchise)"

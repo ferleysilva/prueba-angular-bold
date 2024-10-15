@@ -4,7 +4,8 @@
     <div class="header-card">
       <span>Total de ventas de hoy</span>
       <span class="right-icon">
-        <i class="fa fa-info-circle"></i>
+        <i class="fa fa-info-circle" (click)="toggleTooltipInfo()"></i>
+        <span *ngIf="showTooltipInfo" class="tooltip-text">Resumen de transacciones</span>
       </span>
     </div>
     <div class="content-card">
@@ -19,8 +20,9 @@
 
     <div class="button-section">
       <button [class.selected]="transactionFilters.date === 'today'" (click)="onDateClickAction('today')">Hoy</button>
-      <button [class.selected]="transactionFilters.date === 'week'" (click)="onDateClickAction('week')">Esta semana</button>
-      <button [class.selected]="transactionFilters.date === 'june'" (click)="onDateClickAction('june')">Junio</button>
+      <button [class.selected]="transactionFilters.date === 'week'" (click)="onDateClickAction('week')">Esta
+        semana</button>
+      <button [class.selected]="transactionFilters.date === 'october'" (click)="onDateClickAction('october')">Octubre</button>
     </div>
 
     <div class="filter-button-section">

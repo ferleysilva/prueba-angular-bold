@@ -9,6 +9,7 @@ import { AppTopBar } from './presentation/components/top-bar/top-bar.component';
 import { DashboardFiltersComponent } from './presentation/components/dashboard-filters/dashboard-filters.component';
 import { TransactionTableComponent } from './presentation/components/transaction-table/transaction-table.component';
 import { LoadingComponent } from './presentation/components/loading/loading.component';
+import { TransactionPanelDetailComponent } from './presentation/components/transaction-panel-detail/transaction-panel-detail.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { LoadingComponent } from './presentation/components/loading/loading.comp
     DashboardComponent,
     AppTopBar,
     DashboardFiltersComponent,
-    TransactionTableComponent
+    TransactionTableComponent,
+    TransactionPanelDetailComponent
   ],
   imports: [
     BrowserModule,

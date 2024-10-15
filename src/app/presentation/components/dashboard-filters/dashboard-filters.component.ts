@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import moment from 'moment';
 import { Transaction } from '../../../domain/entities/transaction';
 import { saveDataInLocalStorage } from '../../../common/services/localstorage.services';
@@ -16,7 +16,7 @@ export class DashboardFiltersComponent implements OnInit {
     paymentMethod: string | string[];
     search: string;
   }>();
-
+  showTooltipInfo = false;
   showCheckboxTransactionTypeFlter = false;
   filterTransactionTypeOptions = [
     { label: 'TERMINAL', checked: false },
@@ -26,7 +26,28 @@ export class DashboardFiltersComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.filterTransactionTypeOptions = this.filterTransactionTypeOptions.map(
+      (option) => {
+        if (this.transactionFilters.paymentMethod.includes(option.label)) {
+          return { ...option, checked: true };
+        }
+        return option;
+      }
+    );
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.right-icon') && this.showTooltipInfo) {
+      this.showTooltipInfo = false;
+    }
+  }
+
+  toggleTooltipInfo() {
+    this.showTooltipInfo = !this.showTooltipInfo;
+  }
 
   onDateClickAction(day: string) {
     this.filterTransactions.emit({
@@ -52,9 +73,9 @@ export class DashboardFiltersComponent implements OnInit {
         const endDate = endOfWeek.format('DD [de] MMMM YYYY');
 
         return `${startDate} al ${endDate}`;
-      case 'june':
-        const currentYearForJune = moment().year();
-        return `Junio, ${currentYearForJune}`;
+      case 'october':
+        const currentYearForOctober = moment().year();
+        return `Octubre, ${currentYearForOctober}`;
       default:
         return '';
     }
