@@ -22,9 +22,6 @@ export class TransactionTableComponent implements OnInit {
   }
 
   getImageName(paymentMethod: PaymentMethod, franchise?: Franchise): string {
-    console.log('paymentMethod:', paymentMethod);
-    console.log('franchise:', franchise);
-
     switch (paymentMethod) {
       case 'CARD':
         if (franchise === 'VISA') {

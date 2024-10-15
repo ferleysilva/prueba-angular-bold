@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Transaction } from '../../../domain/entities/transaction';
-import { BoldTransactionRepository } from '../../../data/repositories/bold-transaction.repository';
-import { getTransactionsUseCase } from '../../../domain/usecases/get-transactions.usecases';
 import moment from 'moment';
+import { Transaction } from '../../../domain/entities/transaction';
 
 @Component({
   selector: 'app-dashboard-filters-component',
@@ -12,15 +10,27 @@ import moment from 'moment';
 export class DashboardFiltersComponent implements OnInit {
   @Input() selectedFilter: string = '';
   @Input() filteredTransactions: Transaction[] = [];
-  @Output() filter = new EventEmitter<string>();
+  @Output() filterTransactions = new EventEmitter<{
+    type: string;
+    value: string | string[];
+  }>();
+
+  showCheckboxFilters = false;
+  filterTransactionTypeOptions = [
+    { label: 'TERMINAL', checked: false },
+    { label: 'PAYMENT_LINK', checked: false },
+    { label: 'ALL', checked: false },
+  ];
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadFiltersFromLocalStorage();
+  }
 
-  onFilterClick(filter: string) {
-    localStorage.setItem('selectedFilterDay', filter);
-    this.filter.emit(filter);
+  onFilterClick(day: string) {
+    localStorage.setItem('selectedFilterDay', day);
+    this.filterTransactions.emit({ type: 'date', value: day });
   }
 
   getFilteredDateInString(): string {
@@ -45,7 +55,48 @@ export class DashboardFiltersComponent implements OnInit {
 
   getTotalAmount(): number {
     return this.filteredTransactions.reduce((total, transaction) => {
-        return total + (transaction.amount || 0);
+      return total + (transaction.amount || 0);
     }, 0);
-}
+  }
+
+  showOrHideCheckboxFilters() {
+    this.showCheckboxFilters = !this.showCheckboxFilters;
+  }
+
+  onFilterChange(option: { label: string; checked: boolean }) {
+    console.log(option);
+    option.checked = !option.checked;
+  }
+
+  applyFilters() {
+    const selectedFilters = this.filterTransactionTypeOptions
+      .filter((option) => option.checked)
+      .map((option) => option.label);
+
+    this.saveFiltersToLocalStorage();
+
+    this.filterTransactions.emit({
+      type: 'paymentMethod',
+      value: selectedFilters,
+    });
+  }
+
+  isApplyButtonDisabled(): boolean {
+    return !this.filterTransactionTypeOptions.some((option) => option.checked);
+  }
+
+  saveFiltersToLocalStorage() {
+    const filtersToSave = this.filterTransactionTypeOptions.map((option) => ({
+      label: option.label,
+      checked: option.checked,
+    }));
+    localStorage.setItem('selectedFilters', JSON.stringify(filtersToSave));
+  }
+
+  loadFiltersFromLocalStorage() {
+    const savedFilters = localStorage.getItem('selectedFilters');
+    if (savedFilters) {
+      this.filterTransactionTypeOptions = JSON.parse(savedFilters);
+    }
+  }
 }

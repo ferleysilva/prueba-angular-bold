@@ -24,8 +24,8 @@
           <tr *ngFor="let transaction of filteredTransactions">
             <td>
               <div>
-                <i *ngIf="transaction.type === 'TERMINAL'" class="fa fa-link"></i>
-                <i *ngIf="transaction.type === 'PAYMENT_LINK'" class="fa fa-credit-card"></i>
+                <i *ngIf="transaction.type === 'PAYMENT_LINK'" class="fa fa-link"></i>
+                <i *ngIf="transaction.type === 'TERMINAL'" class="fa fa-credit-card"></i>
                 <span class="transaction-status-text">
                   {{ transaction.status === 'SUCCESSFUL' ? 'Cobro exitoso' : 'Cobro no realizado' }}
                 </span>

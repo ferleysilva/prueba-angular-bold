@@ -4,7 +4,7 @@
 
 <div *ngIf="!isLoading" class="dashboard-container">
   <app-dashboard-filters-component [filteredTransactions]="filteredTransactions" [selectedFilter]="selectedFilter"
-    (filter)="filterTransactions($event)"></app-dashboard-filters-component>
+    (filterTransactions)="filterTransactions($event)"></app-dashboard-filters-component>
   <app-transaction-table [filteredTransactions]="filteredTransactions">
   </app-transaction-table>
 </div>

@@ -16,7 +16,7 @@
   </div>
 
   <div class="date-filters">
-    
+
     <div class="button-section">
       <button [class.selected]="selectedFilter === 'today'" (click)="onFilterClick('today')">Hoy</button>
       <button [class.selected]="selectedFilter === 'week'" (click)="onFilterClick('week')">Esta semana</button>
@@ -24,9 +24,27 @@
     </div>
 
     <div class="filter-button-section">
-      <button>
-        <span>Filtrar</span> <i class="fa fa-sliders"></i>
+      <button class="checkbox-button-filters" (click)="showOrHideCheckboxFilters()"
+        [ngClass]="showCheckboxFilters ? 'large' : 'auto'">
+        <span class="filter-text-container">
+          <span class="filter-text">Filtrar</span>
+        </span>
+        <span class="icon-container">
+          <i class="fa fa-sliders" *ngIf="!showCheckboxFilters"></i>
+          <i class="fa fa-times" *ngIf="showCheckboxFilters"></i>
+        </span>
       </button>
+      <div class="options" [ngClass]="{ 'show': showCheckboxFilters }">
+        <label *ngFor="let option of filterTransactionTypeOptions">
+          <input type="checkbox" [checked]="option.checked" (change)="onFilterChange(option)" />
+          {{ option.label === 'TERMINAL' ? 'Cobro con datáfono' : option.label === 'PAYMENT_LINK' ? 'Cobro con link de
+          pago' : 'Ver todos' }}
+        </label>
+        <div class="apply-button-container">
+          <button class="apply-button" (click)="applyFilters()" [disabled]="isApplyButtonDisabled()">Aplicar</button>
+        </div>
+      </div>
     </div>
+
   </div>
 </div>

@@ -108,20 +108,104 @@
     height: 40px;
 }
 
-.date-filters .filter-button-section button {
+.checkbox-button-filters span {
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    transition: color 0.3s;
+    margin-right: 5px;
+}
+
+.checkbox-button-filters {
+    display: flex;
+    align-items: center;
+    width: auto;
+    justify-content: space-between;
     background: #FFFFFF;
     border: none;
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 5px 5px 0 0;
     cursor: pointer;
     color: #121e6c;
     font-size: 12px;
     font-weight: 600;
 }
 
-.date-filters .filter-button-section button span {
-    font-family: 'Montserrat', sans-serif;
+.checkbox-button-filters.large {
+    width: 250px;
+}
+
+.checkbox-button-filters.auto {
+    width: auto;
+}
+
+.filter-text-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.icon-container {
+    display: flex;
+    align-items: center;
+}
+
+
+.filter-button-section {
+    position: relative;
+}
+
+.options {
+    position: absolute;
+    background-color: white;
+    border: none;
+    z-index: 100;
+    top: 100%;
+    right: 0;
+    width: 250px;
+    opacity: 0;
+    transform: translateY(-10px);
+    visibility: hidden;
+    transition: visibility 0s 0.3s, opacity 0.3s ease, transform 0.3s ease;
+}
+
+.options.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0s;
+}
+
+.options label {
+    display: block;
+    padding: 3px 12px;
     cursor: pointer;
-    transition: color 0.3s;
-    margin-right: 5px;
+    font-size: 12px;
+    color: #121E6C;
+}
+
+.options label:hover {
+    background-color: #f0f0f0;
+}
+
+.apply-button-container {
+    margin: auto 12px;
+}
+
+.apply-button {
+    margin: 10px auto;
+    display: block;
+    padding: 10px 16px;
+    border: none;
+    background: #ee424e;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 20px;
+    font-size: 14px;
+    width: 100%;
+}
+
+.apply-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
 }
