@@ -3,13 +3,13 @@ import { Transaction } from '../../../domain/entities/transaction';
 import { BoldTransactionRepository } from '../../../data/repositories/bold-transaction.repository';
 import { getTransactionsUseCase } from '../../../domain/usecases/get-transactions.usecases';
 import moment from 'moment';
-import { getDataFromLocalStorage } from '../../../common/services/localstorage.services';
 import { transactionViewModelMapper } from '../../../mappers/transation.mapper';
+import { getDataFromLocalStorage } from '../../../common/services/utils';
 
 @Component({
   selector: 'app-dashboard-component',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+  styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
   transactions: Transaction[] = [];

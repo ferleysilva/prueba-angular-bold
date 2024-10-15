@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Transaction } from '../../../domain/entities/transaction';
-import { formatDate } from '../../../common/services/date.utils';
+import { formatDate, getTransactionImageName } from '../../../common/services/utils';
 import { PaymentMethod } from '../../../domain/entities/payment-method';
 import { Franchise } from '../../../domain/entities/franchise';
 
@@ -24,22 +24,6 @@ export class TransactionPanelDetailComponent {
   }
 
   getImageName(paymentMethod: PaymentMethod, franchise?: Franchise): string {
-    switch (paymentMethod) {
-      case 'CARD':
-        if (franchise === 'VISA') {
-          return 'visa.png';
-        }
-        return 'mastercard.png';
-      case 'PSE':
-        return 'pse.png';
-      case 'DAVIPLATA':
-        return 'daviplata.png';
-      case 'NEQUI':
-        return 'nequi.png';
-      case 'BANCOLOMBIA':
-        return 'bancolombia.png';
-      default:
-        return '';
-    }
+    return getTransactionImageName(paymentMethod, franchise);
   }
 }

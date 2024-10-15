@@ -4,13 +4,12 @@ import { Transaction } from '../../../domain/entities/transaction';
 import moment from 'moment';
 import { PaymentMethod } from '../../../domain/entities/payment-method';
 import { Franchise } from '../../../domain/entities/franchise';
-import { saveDataInLocalStorage } from '../../../common/services/localstorage.services';
-import { formatDate } from '../../../common/services/date.utils';
+import { formatDate, getTransactionImageName, saveDataInLocalStorage } from '../../../common/services/utils';
 
 @Component({
   selector: 'app-transaction-table',
   templateUrl: './transaction-table.component.html',
-  styleUrls: ['./transaction-table.component.scss'],
+  styleUrls: ['./transaction-table.component.css'],
 })
 export class TransactionTableComponent implements OnInit {
   @Input() transactionFilters: any = {};
@@ -31,23 +30,7 @@ export class TransactionTableComponent implements OnInit {
   }
 
   getImageName(paymentMethod: PaymentMethod, franchise?: Franchise): string {
-    switch (paymentMethod) {
-      case 'CARD':
-        if (franchise === 'VISA') {
-          return 'visa.png';
-        }
-        return 'mastercard.png';
-      case 'PSE':
-        return 'pse.png';
-      case 'DAVIPLATA':
-        return 'daviplata.png';
-      case 'NEQUI':
-        return 'nequi.png';
-      case 'BANCOLOMBIA':
-        return 'bancolombia.png';
-      default:
-        return '';
-    }
+    return getTransactionImageName(paymentMethod, franchise);
   }
 
   openPanelTransactionDetails(transaction: Transaction) {

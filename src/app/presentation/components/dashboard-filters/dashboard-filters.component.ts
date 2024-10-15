@@ -1,12 +1,12 @@
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import moment from 'moment';
 import { Transaction } from '../../../domain/entities/transaction';
-import { saveDataInLocalStorage } from '../../../common/services/localstorage.services';
+import { saveDataInLocalStorage } from '../../../common/services/utils';
 
 @Component({
   selector: 'app-dashboard-filters-component',
   templateUrl: './dashboard-filters.component.html',
-  styleUrls: ['./dashboard-filters.component.scss'],
+  styleUrls: ['./dashboard-filters.component.css'],
 })
 export class DashboardFiltersComponent implements OnInit {
   @Input() transactionFilters: any = {};
@@ -27,15 +27,16 @@ export class DashboardFiltersComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.filterTransactionTypeOptions = this.filterTransactionTypeOptions.map(
-      (option) => {
+    if (this.transactionFilters && Array.isArray(this.transactionFilters.paymentMethod)) {
+      this.filterTransactionTypeOptions = this.filterTransactionTypeOptions.map((option) => {
         if (this.transactionFilters.paymentMethod.includes(option.label)) {
           return { ...option, checked: true };
         }
         return option;
-      }
-    );
+      });
+    }
   }
+  
 
   @HostListener('document:click', ['$event'])
   onClick(event: MouseEvent) {
